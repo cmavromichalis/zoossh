@@ -25,64 +25,64 @@ var consensusAnnotations map[Annotation]bool = map[Annotation]bool{
 type GetStatus func() *RouterStatus
 
 type RouterFlags struct {
-	Authority bool
-	BadExit   bool
-	Exit      bool
-	Fast      bool
-	Guard     bool
-	HSDir     bool
-	Named     bool
-	Stable    bool
-	Running   bool
-	Unnamed   bool
-	Valid     bool
-	V2Dir     bool
+	Authority bool `json:"Authority"`
+	BadExit   bool `json:"BadExit"`
+	Exit      bool `json:"Exit"`
+	Fast      bool `json:"Fast"`
+	Guard     bool `json:"Guard"`
+	HSDir     bool `json:"HSDir"`
+	Named     bool `json:"Named"`
+	Stable    bool `json:"Stable"`
+	Running   bool `json:"Running"`
+	Unnamed   bool `json:"Unnamed"`
+	Valid     bool `json:"Valid"`
+	V2Dir     bool `json:"V2Dir"`
 }
 
 type RouterAddress struct {
-	IPv4Address net.IP
-	IPv4ORPort  uint16
-	IPv4DirPort uint16
+	IPv4Address net.IP `json:"IPv4Address"`
+	IPv4ORPort  uint16 `json:"IPv4ORPort"`
+	IPv4DirPort uint16 `json:"IPv4DirPort"`
 
-	IPv6Address net.IP
-	IPv6ORPort  uint16
+	IPv6Address net.IP `json:"IPv6Address"`
+	IPv6ORPort  uint16 `json:"IPv6ORPort"`
 }
 
 type RouterStatus struct {
 
 	// The single fields of an "r" line.
-	Nickname    string
-	Fingerprint Fingerprint
-	Digest      string
-	Publication time.Time
+	Nickname    string      `json:"Nickname"`
+	Fingerprint Fingerprint `json:"Fingerprint"`
+	Digest      string      `json:"Digest"`
+	Publication time.Time   `json:"Publication"`
 
 	// The IPv4 and IPv6 fields of "a" line
-	Address RouterAddress
+	Address RouterAddress `json:"Address"`
 
 	// The single fields of an "s" line.
-	Flags RouterFlags
+	Flags RouterFlags `json:"Flags"'`
 
 	// The single fields of a "v" line.
-	TorVersion string
+	TorVersion string `json:"TorVersion"`
 
 	// The single fields of a "w" line.
-	Bandwidth  uint64
-	Measured   uint64
-	Unmeasured bool
+	Bandwidth  uint64 `json:"Bandwidth"`
+	Measured   uint64 `json:"Measured"`
+	Unmeasured bool   `json:"Unmeasured"`
 
 	// The single fields of a "p" line.
-	Accept   bool
-	PortList string
+	Accept   bool   `json:"Accept"`
+	PortList string `json:"PortList"`
 }
 
 type Consensus struct {
 	// Generic map of consensus metadata
-	MetaInfo map[string][]byte
+	MetaInfo map[string][]byte `json:"Measured"`
 
 	// Document validity period
-	ValidAfter time.Time
-	FreshUntil time.Time
-	ValidUntil time.Time
+	ValidAfter time.Time `json:"ValidAfter"`
+	FreshUntil time.Time `json:"FreshUntil"`
+	ValidUntil time.Time `json:"ValidUntil"`
 
 	// Shared randomness
 	SharedRandPrevious []byte
@@ -90,7 +90,7 @@ type Consensus struct {
 
 	// A map from relay fingerprint to a function which returns the relay
 	// status.
-	RouterStatuses map[Fingerprint]GetStatus
+	RouterStatuses map[Fingerprint]GetStatus `json:"RouterStatuses"`
 }
 
 // String implements the String as well as the Object interface.  It returns
