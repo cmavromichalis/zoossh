@@ -80,8 +80,9 @@ type RouterDescriptor struct {
 	RawReject     string
 	RawExitPolicy string
 
-	Accept []*ExitPattern
-	Reject []*ExitPattern
+	Accept     []*ExitPattern
+	Reject     []*ExitPattern
+	ExitPolicy []*ExitPattern
 }
 
 type RouterDescriptors struct {
@@ -324,9 +325,29 @@ func ParseRawDescriptor(rawDescriptor string) (Fingerprint, GetDescriptor, error
 			descriptor.RawReject += words[1] + " "
 			descriptor.RawExitPolicy += words[0] + " " + words[1] + "\n"
 
+			address, port, _ := net.SplitHostPort(words[1])
+
+			exitPattern := &ExitPattern{
+				AddressSpec: address,
+				PortSpec:    port,
+			}
+
+			descriptor.Reject = append(descriptor.Reject, exitPattern)
+			descriptor.ExitPolicy = append(descriptor.ExitPolicy, exitPattern)
+
 		case "accept":
 			descriptor.RawAccept += words[1] + " "
 			descriptor.RawExitPolicy += words[0] + " " + words[1] + "\n"
+
+			address, port, _ := net.SplitHostPort(words[1])
+
+			exitPattern := &ExitPattern{
+				AddressSpec: address,
+				PortSpec:    port,
+			}
+
+			descriptor.Accept = append(descriptor.Accept, exitPattern)
+			descriptor.ExitPolicy = append(descriptor.ExitPolicy, exitPattern)
 		}
 	}
 
